@@ -1,6 +1,6 @@
 #include "vector_test.h"
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	test_printf("\n**************************** test1 start ****************************\n");
 	test1();
@@ -21,12 +21,8 @@ void test1()
 	Vector_Add(&vec, &val2);
 	Vector_AddValue(&vec, int, 4);
 	//Print data
-	int index, element;
 	for(size_t i = 0 ; i < vec.count ; i++)
 		printf("%d ", Vector_GetElement(&vec, int, i));
-	puts("\n");
-	Vector_Foreach(&vec, int, index, element)
-		printf("%d: %d\n", index, element);
 	//Destroy
 	Vector_Destroy(&vec);
 	

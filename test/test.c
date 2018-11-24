@@ -55,7 +55,6 @@ void *test_realloc(void *oldptr, const size_t size)
 }
 void test_free(void *ptr)
 {
-	int found = 0;
 	_remove_allocation(ptr);
 	free(ptr);
 }

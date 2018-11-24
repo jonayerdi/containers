@@ -47,6 +47,4 @@ void Vector_Resize(Vector *vector, size_t newCapacity);
     (vector)->count++; \
 }
 
-#define Vector_Foreach(vector, type, index, element) for((index) = 0 ; (index) < (vector)->count, (element) = Vector_GetElement(vector, type, index) ; (index)++)
-
 #endif /* _VECTOR_H_ */
