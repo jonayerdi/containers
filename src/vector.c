@@ -8,13 +8,13 @@ void Vector_Init(Vector *vector, size_t elementSize, size_t initialCapacity)
     vector->elements = Vector_Malloc(initialCapacity * elementSize);
 }
 
-void Vector_Clone(Vector *vector, const Vector *toCopy)
+void Vector_Clone(Vector *vector, const Vector *source)
 {
-    vector->elementSize = toCopy->elementSize;
-    vector->capacity = toCopy->count;
-    vector->count = toCopy->count;;
+    vector->elementSize = source->elementSize;
+    vector->capacity = source->count;
+    vector->count = source->count;;
     vector->elements = Vector_Malloc(vector->count * vector->elementSize);
-    Vector_Memcpy(vector->elements, toCopy->elements, vector->count * vector->elementSize);
+    Vector_Memcpy(vector->elements, source->elements, vector->count * vector->elementSize);
 }
 
 void Vector_Destroy(Vector *vector)
@@ -25,30 +25,36 @@ void Vector_Destroy(Vector *vector)
     vector->count = 0;
 }
 
-void Vector_Add(Vector *vector, const void *element)
+void Vector_Push(Vector *vector, const void *element)
 {
     if(vector->count == vector->capacity)
     {
         Vector_Grow(vector);
     }
-    Vector_SetElementNoType(vector, vector->count, element);
+    Vector_SetElementPointer(vector, vector->count, element);
     vector->count++;
 }
 
-void Vector_AddIndex(Vector *vector, size_t index, const void *element)
+void Vector_Pop(Vector *vector, void *element)
+{
+    Vector_Memcpy(element, Vector_GetElementPointer(vector, vector->count - 1), vector->elementSize);
+    vector->count--;
+}
+
+void Vector_Add(Vector *vector, size_t index, const void *element)
 {
     if(vector->count == vector->capacity)
     {
         Vector_Grow(vector);
     }
-    Vector_Memmove(Vector_GetElementPointerNoType(vector, index + 1), Vector_GetElementPointerNoType(vector, index), (vector->count - index) * vector->elementSize);
-    Vector_SetElementNoType(vector, index, element);
+    Vector_Memmove(Vector_GetElementPointer(vector, index + 1), Vector_GetElementPointer(vector, index), (vector->count - index) * vector->elementSize);
+    Vector_SetElementPointer(vector, index, element);
     vector->count++;
 }
 
 void Vector_Remove(Vector *vector, size_t index)
 {
-    Vector_Memmove(Vector_GetElementPointerNoType(vector, index), Vector_GetElementPointerNoType(vector, index + 1), (vector->count - index - 1) * vector->elementSize);
+    Vector_Memmove(Vector_GetElementPointer(vector, index), Vector_GetElementPointer(vector, index + 1), (vector->count - index - 1) * vector->elementSize);
     vector->count--;
 }
 

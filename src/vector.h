@@ -12,22 +12,23 @@ typedef struct
 } Vector;
 
 void Vector_Init(Vector *vector, size_t elementSize, size_t initialCapacity);
-void Vector_Clone(Vector *vector, const Vector *toCopy);
+void Vector_Clone(Vector *vector, const Vector *source);
 void Vector_Destroy(Vector *vector);
-void Vector_Add(Vector *vector, const void *element);
-void Vector_AddIndex(Vector *vector, size_t index, const void *element);
+void Vector_Push(Vector *vector, const void *element);
+void Vector_Pop(Vector *vector, void *element);
+void Vector_Add(Vector *vector, size_t index, const void *element);
 void Vector_Remove(Vector *vector, size_t index);
 void Vector_Grow(Vector *vector);
 void Vector_Resize(Vector *vector, size_t newCapacity);
 
-#define Vector_GetElementPointerNoType(vector, index) ((void *)(((uint8_t *)((vector)->elements)) + ((index) * (vector)->elementSize)))
-#define Vector_SetElementNoType(vector, index, element) Vector_Memcpy(Vector_GetElementPointerNoType(vector, index), element, (vector)->elementSize)
+#define Vector_GetElementPointer(vector, index) ((void *)(((uint8_t *)((vector)->elements)) + ((index) * (vector)->elementSize)))
+#define Vector_SetElementPointer(vector, index, element) Vector_Memcpy(Vector_GetElementPointer(vector, index), element, (vector)->elementSize)
 
 #define Vector_GetArray(vector, type) ((type *)((vector)->elements))
-#define Vector_GetElementPointer(vector, type, index) (Vector_GetArray(vector, type) + index)
-#define Vector_GetElement(vector, type, index) Vector_GetArray(vector, type)[index]
+#define Vector_GetElementValue(vector, type, index) Vector_GetArray(vector, type)[index]
+#define Vector_SetElementValue(vector, type, index, element) (Vector_GetArray(vector, type)[index] = (element))
 
-#define Vector_AddValue(vector, type, element) \
+#define Vector_PushValue(vector, type, element) \
 { \
     if((vector)->count == (vector)->capacity) \
     { \
@@ -36,7 +37,8 @@ void Vector_Resize(Vector *vector, size_t newCapacity);
     Vector_GetArray(vector, type)[(vector)->count] = (element); \
     (vector)->count++; \
 }
-#define Vector_AddValueIndex(vector, index, type, element) \
+#define Vector_PopValue(vector, type) Vector_GetElementValue(vector, type, --(vector)->count)
+#define Vector_AddValue(vector, index, type, element) \
 { \
     if((vector)->count == (vector)->capacity) \
     { \
