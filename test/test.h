@@ -16,18 +16,10 @@ if (!(expression)) \
 }
 
 /* Memory leak check */
-#ifndef TEST_ALLOCATIONS_NO_BUFFER
 #ifndef TEST_MAX_MEMORY_ALLOCATIONS
 #define TEST_MAX_MEMORY_ALLOCATIONS 1024u
 #endif /* TEST_MAX_MEMORY_ALLOCATIONS */
-void *_test_allocations_buffer[TEST_MAX_MEMORY_ALLOCATIONS];
-#define TEST_INIT_MEMORY() test_init_memory(_test_allocations_buffer, TEST_MAX_MEMORY_ALLOCATIONS)
-#endif /* TEST_ALLOCATIONS_NO_BUFFER */
 
-/* Shifts ARRAY to the left, changes values from ARRAY[INDEX] to ARRAY[SIZE-2] */
-#define ARRAY_SHIFT_LEFT(ARRAY,INDEX,SIZE) for(size_t _index = (INDEX) ; _index < (SIZE)  - 1 ; _index++) { (ARRAY)[_index] = (ARRAY)[_index + 1]; }
-
-void test_init_allocations(void **buffer, size_t capacity);
 size_t test_allocations_count(void);
 void *test_malloc(const size_t size);
 void *test_realloc(void *oldptr, const size_t size);

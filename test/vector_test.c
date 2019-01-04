@@ -1,4 +1,8 @@
-#include "vector_test.h"
+#include "test.h"
+#include "vector.h"
+
+/* Tests */
+void test1();
 
 int main(void)
 {
