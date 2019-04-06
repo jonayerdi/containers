@@ -4,13 +4,13 @@ set(TEST_SRCS
     test.c
     )
     
-set(VECTOR_TEST_SRCS
+set(VEC_TEST_SRCS
     ${TEST_SRCS}
-    vector_test.c
+    Vec_test.c
     )
 
 include_directories(../src)
 
-add_executable(vector_test ${VECTOR_TEST_SRCS})
-set_property(TARGET vector_test PROPERTY C_STANDARD 99)
-target_link_libraries(vector_test vector)
+add_executable(Vec_test ${VEC_TEST_SRCS})
+set_property(TARGET Vec_test PROPERTY C_STANDARD 99)
+target_link_libraries(Vec_test Vec)

@@ -1,5 +1,5 @@
 #include "test.h"
-#include "vector.h"
+#include "Vec.h"
 
 /* Tests */
 void test1();
@@ -16,19 +16,19 @@ int main(void)
 void test1()
 {
 	//Init
-	Vector vec;
-	Vector_Init(&vec, sizeof(int), 5);
+	Vec vec;
+	Vec_Init(&vec, sizeof(int), 5);
 	//Add values
 	int val1 = 1, val2 = 3;
-    Vector_Add(&vec, &val1);
-	Vector_AddValue(&vec, int, 2);
-	Vector_Add(&vec, &val2);
-	Vector_AddValue(&vec, int, 4);
+    Vec_Push(&vec, &val1);
+	Vec_PushValue(&vec, int, 2);
+	Vec_Push(&vec, &val2);
+	Vec_PushValue(&vec, int, 4);
 	//Print data
 	for(size_t i = 0 ; i < vec.count ; i++)
-		printf("%d ", Vector_GetElement(&vec, int, i));
+		printf("%d ", Vec_GetElementValue(&vec, int, i));
 	//Destroy
-	Vector_Destroy(&vec);
+	Vec_Destroy(&vec);
 	
 	test_assert(test_allocations_count() == 0); /* Check for memory leaks */
 }

@@ -1,7 +1,7 @@
 
-set(VECTOR_SRCS
-    vector.c
+set(VEC_SRCS
+    Vec.c
     )
 
-add_library(vector ${VECTOR_SRCS})
-set_property(TARGET vector PROPERTY C_STANDARD 99)
+add_library(Vec ${VEC_SRCS})
+set_property(TARGET Vec PROPERTY C_STANDARD 99)
