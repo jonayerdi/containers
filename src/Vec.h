@@ -6,23 +6,23 @@
 typedef struct
 { 
     void *elements;
-    size_t elementSize;
-    size_t count;
-    size_t capacity;
+    Vec_size elementSize;
+    Vec_size count;
+    Vec_size capacity;
 } Vec;
 
-void Vec_Init(Vec *vector, size_t elementSize, size_t initialCapacity);
+void Vec_Init(Vec *vector, Vec_size elementSize, Vec_size initialCapacity);
 void Vec_Clone(Vec *vector, const Vec *source);
 void Vec_Destroy(Vec *vector);
 void Vec_Push(Vec *vector, const void *element);
-void Vec_PushAll(Vec *vector, const void *elements, size_t count);
+void Vec_PushAll(Vec *vector, const void *elements, Vec_size count);
 void Vec_Pop(Vec *vector, void *element);
-void Vec_Add(Vec *vector, size_t index, const void *element);
-void Vec_Remove(Vec *vector, size_t index);
+void Vec_Add(Vec *vector, Vec_size index, const void *element);
+void Vec_Remove(Vec *vector, Vec_size index);
 void Vec_Grow(Vec *vector);
-void Vec_Resize(Vec *vector, size_t newCapacity);
+void Vec_Resize(Vec *vector, Vec_size newCapacity);
 
-#define Vec_GetElementPointer(vector, index) ((void *)(((uint8_t *)((vector)->elements)) + ((index) * (vector)->elementSize)))
+#define Vec_GetElementPointer(vector, index) ((void *)(((Vec_u8 *)((vector)->elements)) + ((index) * (vector)->elementSize)))
 #define Vec_SetElementPointer(vector, index, element) Vec_Memcpy(Vec_GetElementPointer(vector, index), element, (vector)->elementSize)
 
 #define Vec_GetArray(vector, type) ((type *)((vector)->elements))
