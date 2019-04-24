@@ -45,7 +45,7 @@ void Vec_Resize(Vec *vector, Vec_size newCapacity);
     { \
         Vec_Grow(vector); \
     } \
-    Vec_Memmove(Vec_GetArray(vector, type) + 1, Vec_GetArray(vector, type), ((vector)->count - (index)) * (vector)->elementSize); \
+    Vec_Memmove(Vec_GetElementPointer(vector, (index) + 1), Vec_GetElementPointer(vector, index), ((vector)->count - (index)) * (vector)->elementSize); \
     Vec_GetArray(vector, type)[index] = (element); \
     (vector)->count++; \
 }
