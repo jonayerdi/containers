@@ -46,10 +46,14 @@ void Vec_PushAll(Vec *vector, const void *elements, Vec_size count)
     vector->count = newCount;
 }
 
-void Vec_Pop(Vec *vector, void *element)
+int Vec_Pop(Vec *vector, void *element)
 {
+    if(vector->count == 0) {
+        return 0;
+    }
     Vec_Memcpy(element, Vec_GetElementPointer(vector, vector->count - 1), vector->elementSize);
     vector->count--;
+    return 1;
 }
 
 void Vec_Add(Vec *vector, Vec_size index, const void *element)
@@ -77,6 +81,6 @@ void Vec_Grow(Vec *vector)
 
 void Vec_Resize(Vec *vector, Vec_size newCapacity)
 {
-    vector->elements = Vec_Realloc(vector->elements, newCapacity);
+    vector->elements = Vec_Realloc(vector->elements, newCapacity * vector->elementSize);
     vector->capacity = newCapacity;
 }

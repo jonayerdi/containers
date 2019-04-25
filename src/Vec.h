@@ -16,7 +16,7 @@ void Vec_Clone(Vec *vector, const Vec *source);
 void Vec_Destroy(Vec *vector);
 void Vec_Push(Vec *vector, const void *element);
 void Vec_PushAll(Vec *vector, const void *elements, Vec_size count);
-void Vec_Pop(Vec *vector, void *element);
+int Vec_Pop(Vec *vector, void *element);
 void Vec_Add(Vec *vector, Vec_size index, const void *element);
 void Vec_Remove(Vec *vector, Vec_size index);
 void Vec_Grow(Vec *vector);
