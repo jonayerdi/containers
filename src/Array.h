@@ -1,7 +1,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-#include <stdlib.h> /* size_t, NULL */
+#include <stddef.h> /* size_t, NULL */
 #include <stdint.h> /* uint8_t */
 #include <string.h> /* memcpy, memmove */
 
