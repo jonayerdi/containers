@@ -1,6 +1,6 @@
 #include "Vec.h"
 
-void Vec_Init(Vec *vector, Vec_size elementSize, Vec_size initialCapacity)
+void Vec_Init(Vec *vector, size_t elementSize, size_t initialCapacity)
 {
     vector->elementSize = elementSize;
     vector->capacity = initialCapacity;
@@ -25,6 +25,18 @@ void Vec_Destroy(Vec *vector)
     vector->count = 0;
 }
 
+void Vec_Grow(Vec *vector)
+{
+    size_t newCapacity = (vector->capacity * VEC_GROWTH_FACTOR) + 1;
+    Vec_Resize(vector, newCapacity);
+}
+
+void Vec_Resize(Vec *vector, size_t newCapacity)
+{
+    vector->elements = Vec_Realloc(vector->elements, newCapacity * vector->elementSize);
+    vector->capacity = newCapacity;
+}
+
 void Vec_Push(Vec *vector, const void *element)
 {
     if(vector->count == vector->capacity)
@@ -35,9 +47,9 @@ void Vec_Push(Vec *vector, const void *element)
     vector->count++;
 }
 
-void Vec_PushAll(Vec *vector, const void *elements, Vec_size count) 
+void Vec_PushAll(Vec *vector, const void *elements, size_t count) 
 {
-    Vec_size newCount = vector->count + count;
+    size_t newCount = vector->count + count;
     if(newCount >= vector->capacity)
     {
         Vec_Resize(vector, newCount);
@@ -56,7 +68,7 @@ int Vec_Pop(Vec *vector, void *element)
     return 1;
 }
 
-void Vec_Add(Vec *vector, Vec_size index, const void *element)
+void Vec_Add(Vec *vector, size_t index, const void *element)
 {
     if(vector->count == vector->capacity)
     {
@@ -67,20 +79,8 @@ void Vec_Add(Vec *vector, Vec_size index, const void *element)
     vector->count++;
 }
 
-void Vec_Remove(Vec *vector, Vec_size index)
+void Vec_Remove(Vec *vector, size_t index)
 {
     Vec_Memmove(Vec_GetElementPointer(vector, index), Vec_GetElementPointer(vector, index + 1), (vector->count - index - 1) * vector->elementSize);
     vector->count--;
-}
-
-void Vec_Grow(Vec *vector)
-{
-    Vec_size newCapacity = (vector->capacity * VEC_GROWTH_FACTOR) + 1;
-    Vec_Resize(vector, newCapacity);
-}
-
-void Vec_Resize(Vec *vector, Vec_size newCapacity)
-{
-    vector->elements = Vec_Realloc(vector->elements, newCapacity * vector->elementSize);
-    vector->capacity = newCapacity;
 }

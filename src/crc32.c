@@ -1,6 +1,6 @@
 
-#define _CRC32_C_
-#include "crc32.h"
+#define CRC32_C
+#include "CRC32.h"
 
 uint32_t CRC32_Compute(void *data, size_t size)
 {

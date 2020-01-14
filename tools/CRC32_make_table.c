@@ -37,7 +37,7 @@ void CRC32_PrintTable(uint32_t crcTable[256], const char *indentation)
     {
         if (i%4 == 0 && i>0)
 			printf("\n%s", indentation);
-		printf("0x%"PRIx32"U", crcTable[i]);
+		printf("0x%08"PRIX32"U", crcTable[i]);
         if(i < 255)
 		    printf(", ");
     }
@@ -45,18 +45,17 @@ void CRC32_PrintTable(uint32_t crcTable[256], const char *indentation)
 
 void CRC32_PrintTableHeader(uint32_t crcTable[256])
 {
+    printf("#include <stdint.h> /* uint32_t */\n");
     printf("\n");
-    printf("#include <stdint.h>\n");
-    printf("\n");
-    printf("#ifndef _CRC32_C_\n");
+    printf("#ifndef CRC32_C\n");
     printf("extern uint32_t CRC32_Table[256];\n");
-    printf("#else /* _CRC32_C_ */\n");
+    printf("#else /* CRC32_C */\n");
     printf("uint32_t CRC32_Table[256] = \n");
     printf("{\n");
     CRC32_PrintTable(crcTable, "    ");
     printf("\n");
     printf("};\n");
-    printf("#endif /* _CRC32_C_ */\n");
+    printf("#endif /* CRC32_C */\n");
 }
 
 int main(int argc, char *argv[])
